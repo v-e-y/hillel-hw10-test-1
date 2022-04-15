@@ -18,12 +18,11 @@ abstract class AbstractTransformer
 
     protected string $heightSign;
 
-
     /*
     * Getters
     */
 
-    public function getSpeed(bool $withSign = false): mixed
+    public function getSpeed(bool $withSign = false)
     {
         if ($withSign) {
             return [$this->speed, $this->speedSign];
