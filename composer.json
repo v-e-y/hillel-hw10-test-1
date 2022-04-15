@@ -3,9 +3,9 @@
     "autoload": {
         "psr-4": {
             "VEY\\HillelHw10Test1\\": "src/",
-            "Hillel\\Robots\\Interfaces\\": "src/Contracts/",
-            "Hillel\\Robots\\Abstracts\\": "src/Abstracts/",
-            "Hillel\\Robots\\": "src/"
+            "Hillel\\Transformers\\Interfaces\\": "src/Contracts/",
+            "Hillel\\Transformers\\Abstracts\\": "src/Abstracts/",
+            "Hillel\\Transformers\\": "src/"
         }
     },
     "authors": [

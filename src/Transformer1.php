@@ -2,13 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Hillel\Robots;
+namespace Hillel\Transformers;
 
-class Transformer1
+use Hillel\Transformers\Abstracts\AbstractTransformer;
+use Hillel\Transformers\Interfaces\TransformerInterface;
+
+class Transformer1 extends AbstractTransformer implements TransformerInterface
 {
-    protected array $speed = [15, 'km/h'];
+    protected float $speed = 15;
 
-    protected array $weight = [1324, 'kg'];
+    protected string $speedSign = 'km/h';
 
-    protected array $height = [3.5, 'm'];
+    protected float $weight = 1324;
+
+    protected string $weightSign = 'kg';
+
+    protected float $height = 3.5;
+
+    protected string $heightSign = 'm';
 }
