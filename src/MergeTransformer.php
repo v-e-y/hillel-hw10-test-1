@@ -57,7 +57,7 @@ class MergeTransformer extends AbstractTransformer implements TransformerInterfa
             }
 
             if ($paramName === 'speed') {
-                $this->$paramName =  ($this->$paramName < $paramValue) ? $this->$paramName : $paramValue;
+                $this->$paramName = ($this->$paramName < $paramValue) ? $this->$paramName : $paramValue;
                 continue;
             }
 
