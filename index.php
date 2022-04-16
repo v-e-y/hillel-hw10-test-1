@@ -17,31 +17,20 @@ $transFactory = new TransformerFactory();
 $transFactory->addType(new Transformer1);
 $transFactory->addType(new Transformer2);
 
-$transformers = $transFactory->createTransformer2(2);
+print_r($transFactory->createTransformer1(5));
+print_r($transFactory->createTransformer2(2));
 
-// var_dump(new MergeTransformer, new Transformer1, new Transformer2);
-
-echo '<br>' . PHP_EOL;
-
-$mergeTrans = new MergeTransformer;
-
-echo 'Base merge trans <br>';
-echo $mergeTrans . '<br>' . PHP_EOL;
-
-echo 'Add trans 1 <br>';
-$mergeTrans->addTransformer(new Transformer1);
-
-echo $mergeTrans . '<br>' . PHP_EOL;
-
-echo 'Add trans 2 twice <br>';
+$mergeTrans = new MergeTransformer();
+$mergeTrans->addTransformer(new Transformer2);
 $mergeTrans->addTransformer($transFactory->createTransformer2(2));
-
-echo $mergeTrans . '<br>' . PHP_EOL;
 
 $transFactory->addType($mergeTrans);
 
 $transformer = reset($transFactory->createMergeTransformer(1));
 
+echo$transformer;
+echo '<br>';
 echo $transformer->getSpeed() . PHP_EOL; 
 echo $transformer->getWeight() . PHP_EOL;
 echo $transformer->getHeight() . PHP_EOL;
+

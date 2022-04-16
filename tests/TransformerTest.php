@@ -5,105 +5,73 @@ namespace Hillel\Transformers\Tests;
 use ReflectionClass;
 use Hillel\Transformers\MergeTransformer;
 use Hillel\Transformers\Transformer1;
+use Hillel\Transformers\Transformer2;
 use Hillel\Transformers\TransformerFactory;
 use PHPUnit\Framework\TestCase;
 
-class StrTest extends TestCase
+class TransformerTest extends TestCase
 {
     protected TransformerFactory $transFactory;
+    protected MergeTransformer $mergeTransformer;
 
     public function setUp(): void
     {
         $this->transFactory = new TransformerFactory();
+        $this->mergeTransformer = new MergeTransformer();
     }
 
-    
-
-    public function testPrice()
+    public function testBuildTransformers()
     {
         $this->transFactory->addType(new Transformer1);
 
-        //$this->assertEqualsCanonicalizing(17500, $this->product->price);
+        $this->assertEquals(
+            [new Transformer1, new Transformer1],
+            $this->transFactory->createTransformer1(2)
+        );
+        
+        $this->transFactory->addType(new Transformer2);
 
         $this->assertEquals(
-            [Transformer1::class],
-            (new ReflectionClass(Transformer1::class))
-                ->getProperty('transformerToBuild')
-                ->getValue($this->transformerToBuild)
+            [new Transformer2, new Transformer2, new Transformer2, new Transformer2],
+            $this->transFactory->createTransformer2(4)
         );
-        /*
-        $this->product->price = 18500;
-
-        $this->assertEqualsCanonicalizing(18500, $this->product->price);
-
-        $this->assertEquals(
-            1850000,
-            (new ReflectionClass(Product::class))
-                ->getProperty('price')
-                ->getValue($this->product)
-        );
-        */
     }
 
-    /*
-    public function testAttributes()
+    public function testMergeTransformers()
     {
-        $this->assertEqualsCanonicalizing(
-            ['memory' => '8GB', 'color' => 'silver'],
-            $this->product->attributes
+        $this->mergeTransformer->addTransformer(new Transformer1);
+        $emptyTransformer = new MergeTransformer();
+
+        $this->assertNotEquals(
+            $this->mergeTransformer,
+            $emptyTransformer,
         );
 
         $this->assertEquals(
-            '{"memory":"8GB","color":"silver"}',
-            (new ReflectionClass(Product::class))
-                ->getProperty('attributes')
-                ->getValue($this->product)
+            [
+                'speed' => 10,
+                'speedSign' => 'km/h',
+                'weight' => 2824,
+                'weightSign' => 'kg',
+                'height' => 8.5,
+                'heightSign' => 'm'
+            ],
+            $this->mergeTransformer->getTransformerCharacteristics()
         );
 
-        $attributes = $this->product->attributes;
-        $attributes['year'] = 2021;
-        $this->product->attributes = $attributes;
-
-        $this->assertEqualsCanonicalizing(
-            ['memory' => '8GB', 'color' => 'silver', 'year' => 2021],
-            $this->product->attributes
-        );
-
+        $this->transFactory->addType(new Transformer2);
+        $this->mergeTransformer->addTransformer($this->transFactory->createTransformer2(2));
+        
         $this->assertEquals(
-          '{"memory":"8GB","color":"silver","year":2021}',
-          (new ReflectionClass(Product::class))
-              ->getProperty('attributes')
-              ->getValue($this->product)
+            [
+                'speed' => 10.0,
+                'speedSign' => 'km/h',
+                'weight' => 5224.0,
+                'weightSign' => 'kg',
+                'height' => 14.5,
+                'heightSign' => 'm'
+            ],
+            $this->mergeTransformer->getTransformerCharacteristics()
         );
     }
-
-    public function testUpdatedAt()
-    {
-        $this->assertEqualsCanonicalizing(
-            '2022-04-08 17:31:09',
-            $this->product->updatedAt
-        );
-
-        $this->assertEquals(
-            1649428269,
-            (new ReflectionClass(Product::class))
-                ->getProperty('updatedAt')
-                ->getValue($this->product)
-        );
-
-        $this->product->updatedAt = 1649433098;
-
-        $this->assertEqualsCanonicalizing(
-            '2022-04-08 18:51:38',
-            $this->product->updatedAt
-        );
-
-        $this->assertEquals(
-            1649433098,
-            (new ReflectionClass(Product::class))
-                ->getProperty('updatedAt')
-                ->getValue($this->product)
-        );
-    }
-    */
 }
