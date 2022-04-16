@@ -5,6 +5,7 @@
             "VEY\\HillelHw10Test1\\": "src/",
             "Hillel\\Transformers\\Interfaces\\": "src/Contracts/",
             "Hillel\\Transformers\\Abstracts\\": "src/Abstracts/",
+            "Hillel\\Transformers\\Tests\\": "src/test/",
             "Hillel\\Transformers\\": "src/"
         }
     },
@@ -14,5 +15,7 @@
             "email": "v.eduard.y@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "phpunit/phpunit": "^9.5"
+    }
 }

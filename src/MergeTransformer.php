@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
@@ -27,7 +27,7 @@ class MergeTransformer extends AbstractTransformer implements TransformerInterfa
      * @return void
      */
     public function addTransformer($transformerToMerge): void
-    {        
+    {
         if (is_array($transformerToMerge)) {
             foreach ($transformerToMerge as $transformer) {
                 $this->merge($transformer);
@@ -39,6 +39,11 @@ class MergeTransformer extends AbstractTransformer implements TransformerInterfa
         }
     }
 
+    /**
+     * Merge $this transformer with given one.
+     * @param TransformerInterface $transformerToMerge
+     * @return void
+     */
     private function merge(TransformerInterface $transformerToMerge): void
     {
         if (array_keys(get_object_vars($this)) !== array_keys($transformerToMerge->getTransformerCharacteristics())) {
@@ -59,6 +64,4 @@ class MergeTransformer extends AbstractTransformer implements TransformerInterfa
             $this->$paramName =  $this->$paramName + $paramValue;
         }
     }
-
-
 }

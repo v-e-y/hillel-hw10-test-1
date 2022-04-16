@@ -47,7 +47,7 @@ final class TransformerFactory
         }
 
         $buildedTransformers = [];
-        
+
         for ($i = 0; $i < $count; $i++) {
             $buildedTransformers[] = clone $this->transformerToBuild[$transformerWhichWeWantToBuild];
         }

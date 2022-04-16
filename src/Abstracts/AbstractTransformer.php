@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Hillel\Transformers\Abstracts;
 
-use ReflectionClass;
-
 abstract class AbstractTransformer
 {
     protected float $speed;
@@ -126,14 +124,13 @@ abstract class AbstractTransformer
     {
         $string = 'Transformer characteristics:<br>speed - %.1f %s,<br>weight - %.1f %s,<br>heigh - %.1f %s.';
         return sprintf(
-            $string, 
-            $this->getSpeed(), 
-            $this->getSpeedSign(), 
+            $string,
+            $this->getSpeed(),
+            $this->getSpeedSign(),
             $this->getWeight(),
             $this->getWeightSign(),
             $this->getHeight(),
             $this->getHeightSign()
         );
     }
-
 }
