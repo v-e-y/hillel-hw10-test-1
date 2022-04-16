@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Hillel\Transformers\Abstracts;
 
+use ReflectionClass;
+
 abstract class AbstractTransformer
 {
     protected float $speed;
@@ -18,35 +20,54 @@ abstract class AbstractTransformer
 
     protected string $heightSign;
 
+    /**
+     * Get transformer characteristics
+     * @return array // Transformer characteristics
+     */
+    public function getTransformerCharacteristics(): array
+    {
+        return [
+            'speed' => $this->getSpeed(),
+            'speedSign' => $this->getSpeedSign(),
+            'weight' => $this->getWeight(),
+            'weightSign' => $this->getWeightSign(),
+            'height' => $this->getHeight(),
+            'heightSign' => $this->getHeightSign()
+        ];
+    }
+
     /*
     * Getters
     */
 
-    public function getSpeed(bool $withSign = false)
+    public function getSpeed(): float
     {
-        if ($withSign) {
-            return [$this->speed, $this->speedSign];
-        }
-
         return $this->speed;
     }
 
-    public function getWeight(bool $withSign = false): mixed
+    public function getSpeedSign(): string
     {
-        if ($withSign) {
-            return [$this->weight, $this->weightSign];
-        }
+        return $this->speedSign;
+    }
 
+    public function getWeight(): float
+    {
         return $this->weight;
     }
 
-    public function getHeight(bool $withSign = false): mixed
+    public function getWeightSign(): string
     {
-        if ($withSign) {
-            return [$this->height, $this->heightSign];
-        }
+        return $this->weightSign;
+    }
 
+    public function getHeight(): float
+    {
         return $this->height;
+    }
+
+    public function getHeightSign(): string
+    {
+        return $this->heightSign;
     }
 
     /*
@@ -99,6 +120,20 @@ abstract class AbstractTransformer
         // Check data for equals allowed sign from config file or class property
 
         $this->heightSign = $heightSign;
+    }
+
+    public function __toString()
+    {
+        $string = 'Transformer characteristics:<br>speed - %.1f %s,<br>weight - %.1f %s,<br>heigh - %.1f %s.';
+        return sprintf(
+            $string, 
+            $this->getSpeed(), 
+            $this->getSpeedSign(), 
+            $this->getWeight(),
+            $this->getWeightSign(),
+            $this->getHeight(),
+            $this->getHeightSign()
+        );
     }
 
 }

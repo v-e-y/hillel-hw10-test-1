@@ -6,7 +6,7 @@ namespace Hillel\Transformers;
 
 use Hillel\Transformers\Interfaces\TransformerInterface;
 
-class TransformerFactory
+final class TransformerFactory
 {
     // Array with Transformers objects
     private array $transformerToBuild;
@@ -33,7 +33,7 @@ class TransformerFactory
     /**
      * Build a given number of transformers.
      * @param string $transformerType // Transformer type to build
-     * @param integer $count // The number of robots we want to build.
+     * @param integer $count // The number of robots which we want to build.
      * @return array // With cloned objects
      */
     private function createTransformers(string $transformerType, int $count): array
