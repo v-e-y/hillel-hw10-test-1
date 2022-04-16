@@ -11,6 +11,11 @@ class TransformerFactory
     // Array with Transformers objects
     private array $transformerToBuild;
 
+    /**
+     * Add transformers for build or just store inside factory
+     * @param TransformerInterface $transformer
+     * @return void
+     */
     public function addType(TransformerInterface $transformer): void
     {
         $this->transformerToBuild[get_class($transformer)] = $transformer;
@@ -18,36 +23,42 @@ class TransformerFactory
 
     public function __call($name, $arguments)
     {
+        // If called method contains in name 'create' we will try to create something)))
         if (strpos($name, 'create') !== false && count($arguments) == 1) {
             // Create Transformers
-            $this->createTransformers(substr($name, strlen('create')), $arguments[0]);
+            return $this->createTransformers(substr($name, strlen('create')), $arguments[0]);
         }
-        
-        //throw new Exception('Call to undefined method');
     }
 
-    private function createTransformers(string $transformerType, int $count)
+    /**
+     * Build a given number of transformers.
+     * @param string $transformerType // Transformer type to build
+     * @param integer $count // The number of robots we want to build.
+     * @return array // With cloned objects
+     */
+    private function createTransformers(string $transformerType, int $count): array
     {
-        $transformerForBuild = '';
+        $transformerWhichWeWantToBuild = '';
 
         foreach ($this->getTransformersToBuildName() as $name) {
             if (strpos($name, $transformerType)) {
-                $transformerForBuild = $name;
+                $transformerWhichWeWantToBuild = $name;
             }
         }
 
         $buildedTransformers = [];
-        var_dump($this->transformerToBuild[$transformerForBuild]);
-
-        var_dump($this->transformerToBuild[$transformerForBuild]->getSpeed());
-
-        for ($i = 0; $i< $count; $i++) {
-            $buildedTransformers[] = clone $this->transformerToBuild[$transformerForBuild];
+        
+        for ($i = 0; $i < $count; $i++) {
+            $buildedTransformers[] = clone $this->transformerToBuild[$transformerWhichWeWantToBuild];
         }
 
         return $buildedTransformers;
     }
 
+    /**
+     * Returns all transformers name which we have for build
+     * @return array // with transformers name which we have for build
+     */
     private function getTransformersToBuildName(): array
     {
         if (count($this->transformerToBuild) == 0) {
@@ -56,17 +67,4 @@ class TransformerFactory
 
         return array_keys($this->transformerToBuild);
     }
-
-
-
-    /*
-    private function buildRobots(RobotInterface $robot, int $howMuch): array
-    {
-        $robots = [];
-        for ($i=0; $i < $howMuch; $i++) { 
-            $robots
-        }
-        return [];
-    }
-    */
 }
