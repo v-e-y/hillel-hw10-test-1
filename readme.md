@@ -10,7 +10,7 @@ CMD: composer install
 
 ## Turn on/run project
 ```
-CMD: docker-compose up -d
+CMD: docker-compose up -d --build
 ```
 
 ## To look the result
